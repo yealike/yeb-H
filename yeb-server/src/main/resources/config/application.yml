@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.15.251:3306/yeb?useUnicode=true&characterEncoding=UTF-8&serverZone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/yeb?useUnicode=true&characterEncoding=UTF-8&serverZone=Asia/Shanghai
     username: root
     password: 123456
     hikari:
@@ -16,13 +16,27 @@ spring:
       max-lifetime: 180000
       connection-timeout: 3000
       connection-test-query: SELECT 1
-
+#Mybatis-plus配置
 mybatis-plus:
+  #mapper映射文件
   mapper-locations: classpath*:/mapper/*Mapper.xml
+  #mybatis数据返回类型名（默认名是类名）
   type-aliases-package: com.example.server.pojo
   configuration:
+    #自动驼峰命名
     map-underscore-to-camel-case: false
 
+#Mybatis SQL 打印（方法接口所在的包，不是Mapper.xml所在的包）
 logging:
   level:
     com.example.server.mapper: debug
+
+jwt:
+  #JWT存储的请求头
+  tokenHeader: Authorization
+  #JWT 加密使用的密钥
+  secret: yeb-secret
+  #JWT超时时间
+  expiration: 604800
+  #JWT负载中拿到开头
+  tokenHead: Bearer
