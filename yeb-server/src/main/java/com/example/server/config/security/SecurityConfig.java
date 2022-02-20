@@ -44,16 +44,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
                 "/login",
-                "logout",
+                "/logout",
                 "/css/**",
                 "/js/**",
                 "/index.html",
                 "/favicon.ico",
                 "/doc.html",
                 "/webjars/**",
-                "/swagger-resource/**",
+                "/swagger-resources/**",
                 "/v2/api-docs/**",
-                "/ok"
+                "/captcha"
+
         );
     }
 
@@ -67,10 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                //允许登录
-                .antMatchers("/login", "logout")
-                .permitAll()
-                //除了上面的，所有请求都需要认证
+
+                //所有请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()
