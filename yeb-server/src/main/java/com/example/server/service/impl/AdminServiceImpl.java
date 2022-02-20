@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.server.config.security.JwtTokenUtil;
 import com.example.server.pojo.Admin;
 import com.example.server.mapper.AdminMapper;
+import com.example.server.pojo.Menu;
 import com.example.server.pojo.RespBean;
 import com.example.server.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,6 +55,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public RespBean login(String username, String password,String code, HttpServletRequest request) {
 
         String captcha = (String) request.getSession().getAttribute("captcha");
+        System.out.println("测试验证码："+captcha);
         if (StringUtils.isEmpty(code)||!captcha.equalsIgnoreCase(code)){
             //验证码是空的或者验证码匹配不上
             return RespBean.error("验证码输入错误，请重新输入");
@@ -97,4 +100,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",username)
                 .eq("enabled",true));
     }
+
+
 }

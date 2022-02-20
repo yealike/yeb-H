@@ -59,6 +59,16 @@
             <artifactId>kaptcha</artifactId>
             <version>0.0.9</version>
         </dependency>
+        <!--Spring data redis依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--Commons-pool2对象池依赖-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

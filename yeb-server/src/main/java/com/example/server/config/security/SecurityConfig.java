@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/swagger-resources/**",
                 "/v2/api-docs/**",
-                "/captcha"
+                "/captcha",
+                "/hello"
 
         );
     }
