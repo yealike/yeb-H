@@ -2,6 +2,9 @@ package com.example.server.mapper;
 
 import com.example.server.pojo.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.server.pojo.Menu;
+
+import java.util.List;
 
 /**
  * <p>
