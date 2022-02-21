@@ -50,6 +50,7 @@ public class LoginController {
         //出于安全考虑，不能返回用户的密码，即使是加密的也不能返回，返回给前端也没啥用，也不能给普通人看
         //因为得到的是一个完整的Admin对象，需要主动抹去密码
         admin.setPassword(null);
+        admin.setRoles(adminService.getRoles(admin.getId()));
         return admin;
     }
 
