@@ -44,7 +44,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             //检查menus是否真实存在，如果没有就去数据库里面查
             menus = menuMapper.getMenusByAdminId(adminId);
             //将数据存入redis中
-            valueOperations.set("menu_"+adminId,menus);
+            valueOperations.set("menu_" + adminId, menus);
         }
 
         return menus;
@@ -52,10 +52,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     /**
      * 根据角色获取菜单列表
+     *
      * @return
      */
     @Override
     public List<Menu> getMenuWithRole() {
         return menuMapper.getMenusWithRole();
+    }
+
+    /**
+     * 查询所有菜单
+     *
+     * @return
+     */
+    @Override
+    public List<Menu> getAllMenus() {
+        return menuMapper.getAllMenus();
     }
 }
