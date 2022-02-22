@@ -1,0 +1,65 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/yeb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai"
+    username: root
+    password: 123456
+    hikari:
+      pool-name: DataHikaricP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 180000
+      connection-timeout: 3000
+      connection-test-query: SELECT 1
+
+  redis:
+    #超时时间
+    timeout: 10000ms
+    #服务器地址
+    host: 172.81.205.117
+    #服务器端口
+    port: 6379
+    #数据库
+    database: 0
+    #免密无需设置密码
+    lettuce:
+      pool:
+        #最大连接数
+        max-active: 1024
+        #最大连接阻塞时间，默认-1
+        max-wait: 10000ms
+        #最大空闲连接
+        max-idle: 200
+        #最小空闲连接
+        min-idle: 0
+    password: 123456
+
+#Mybatis-plus配置
+mybatis-plus:
+  #mapper映射文件
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #mybatis数据返回类型名（默认名是类名）
+  type-aliases-package: com.example.server.pojo
+  configuration:
+    #自动驼峰命名
+    map-underscore-to-camel-case: false
+
+#Mybatis SQL 打印（方法接口所在的包，不是Mapper.xml所在的包）
+logging:
+  level:
+    com.example.server.mapper: debug
+
+jwt:
+  #JWT存储的请求头
+  tokenHeader: Authorization
+  #JWT 加密使用的密钥
+  secret: yeb-secret
+  #JWT超时时间
+  expiration: 604800
+  #JWT负载中拿到开头
+  tokenHead: Bearer
