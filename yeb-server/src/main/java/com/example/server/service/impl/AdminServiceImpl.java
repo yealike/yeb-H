@@ -1,10 +1,13 @@
 package com.example.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.server.AdminUtils;
 import com.example.server.config.security.component.JwtTokenUtil;
+import com.example.server.mapper.AdminRoleMapper;
 import com.example.server.mapper.RoleMapper;
 import com.example.server.pojo.Admin;
 import com.example.server.mapper.AdminMapper;
+import com.example.server.pojo.AdminRole;
 import com.example.server.pojo.RespBean;
 import com.example.server.pojo.Role;
 import com.example.server.service.IAdminService;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 
@@ -49,17 +53,19 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private AdminMapper adminMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private AdminRoleMapper adminRoleMapper;
 
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
     @Override
-    public RespBean login(String username, String password,String code, HttpServletRequest request) {
+    public RespBean login(String username, String password, String code, HttpServletRequest request) {
 
         String captcha = (String) request.getSession().getAttribute("captcha");
-        System.out.println("测试验证码："+captcha);
-        if (StringUtils.isEmpty(code)||!captcha.equalsIgnoreCase(code)){
+        System.out.println("测试验证码：" + captcha);
+        if (StringUtils.isEmpty(code) || !captcha.equalsIgnoreCase(code)) {
             //验证码是空的或者验证码匹配不上
             return RespBean.error("验证码输入错误，请重新输入");
         }
@@ -77,7 +83,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         //更新security登录用户对象
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                userDetails,null,userDetails.getAuthorities());
+                        userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
@@ -85,33 +91,67 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         //如果判断都成立说明登录成功
         String token = jwtTokenUtil.generateToken(userDetails);
         Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token",token);
-        tokenMap.put("tokenHead",tokenHead);//给前端用的，让他放在请求头里面
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);//给前端用的，让他放在请求头里面
 
-        return RespBean.success("登录成功",tokenMap);
+        return RespBean.success("登录成功", tokenMap);
 
     }
 
     /**
      * 根据用户名获取完整的用户对象，
      * 需要去数据查询，提前注入AdminMapper
+     *
      * @param username
      * @return
      */
     @Override
     public Admin getAdminByUsername(String username) {
-        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",username)
-                .eq("enabled",true));
+        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username", username)
+                .eq("enabled", true));
     }
 
     /**
      * 根据用户id查询角色列表
+     *
      * @param adminId
      * @return
      */
     @Override
     public List<Role> getRoles(Integer adminId) {
         return roleMapper.getRoles(adminId);
+    }
+
+    /**
+     * 获取所有操作员
+     * 不能查当前登录的操作员
+     * 传参的时候除了传keywords 还要传当前登录用户的id
+     *
+     * @param keywords
+     * @return
+     */
+    @Override
+    public List<Admin> getAllAdmins(String keywords) {
+        return adminMapper.getAllAdmins(AdminUtils.getCurrentAdmin().getId(), keywords);
+    }
+
+    /**
+     * 更新操作员角色
+     *
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    @Override
+    @Transactional
+    public RespBean updateAdminRole(Integer adminId, Integer[] rids) {
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("adminId", adminId));
+
+        Integer result = adminRoleMapper.addAdminRole(adminId, rids);
+        if (rids.length == result) {
+            return RespBean.success("更新成功！");
+        }
+        return RespBean.error("更新失败！");
     }
 
 

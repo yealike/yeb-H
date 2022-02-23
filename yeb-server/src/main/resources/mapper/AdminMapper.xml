@@ -21,4 +21,29 @@
         id, name, phone, telephone, address, enabled, username, password, userFace, remark
     </sql>
 
+    <resultMap id="AdminWithRole" type="com.example.server.pojo.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.example.server.pojo.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+    <!--获取所有操作员-->
+    <select id="getAllAdmins" resultMap="AdminWithRole">
+        select a.*,
+               r.id     as rid,
+               r.name   as rname,
+               r.nameZh as rnameZh
+        from t_admin a
+                 left join t_admin_role ar on a.id = ar.adminId
+                 left join t_role r on r.id = ar.rid
+        where a.id != #{id}
+        <if test="null !=keywords and ''!=keywords">
+            and a.name like concat('%', #{keywords}, '%')
+        </if>
+
+        order by a.id
+
+    </select>
+
 </mapper>
