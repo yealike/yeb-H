@@ -28,7 +28,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
      * @return
      */
     @Override
-    public List<Department> gteAllDepartments() {
+    public List<Department> getAllDepartments() {
         return departmentMapper.getAllDepartments(-1);
     }
 

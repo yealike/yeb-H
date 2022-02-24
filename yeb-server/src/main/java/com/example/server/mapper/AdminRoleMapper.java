@@ -3,6 +3,7 @@ package com.example.server.mapper;
 import com.example.server.pojo.AdminRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.server.pojo.RespBean;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @author 叶汉
  * @since 2022-02-19
  */
+@Mapper
 public interface AdminRoleMapper extends BaseMapper<AdminRole> {
 
     /**

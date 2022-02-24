@@ -2,6 +2,7 @@ package com.example.server.mapper;
 
 import com.example.server.pojo.MenuRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -12,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * @author 叶汉
  * @since 2022-02-19
  */
+@Mapper
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 
     /**

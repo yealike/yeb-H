@@ -2,6 +2,7 @@ package com.example.server.mapper;
 
 import com.example.server.pojo.PoliticsStatus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 叶汉
  * @since 2022-02-19
  */
+@Mapper
 public interface PoliticsStatusMapper extends BaseMapper<PoliticsStatus> {
 
 }
