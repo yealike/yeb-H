@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  mail:
+    #邮件服务器地址
+    host: smtp.qq.com
+    #协议
+    protocol: smtp
+    #编码格式
+    default-encoding: UTF-8
+    #授权码在邮件开通服务时获取
+    password: bvtpswwamfuqbegf
+    #发送者邮箱地址
+    username: 925182704@qq.com
+    #端口号
+    port: 25
+
+  rabbitmq:
+    username: guest
+    password: guest
+    host: 172.81.205.117
+    port: 5672

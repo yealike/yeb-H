@@ -17,6 +17,16 @@ spring:
       connection-timeout: 3000
       connection-test-query: SELECT 1
 
+  rabbitmq:
+    username: guest
+    password: guest
+    host: 172.81.205.117
+    port: 5672
+    #消息确认回调
+    publisher-confirm-type: correlated
+    #消息失败回调
+    publisher-returns: true
+
   redis:
     #超时时间
     timeout: 10000ms
