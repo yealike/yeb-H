@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
@@ -25,7 +26,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  * websocket配置类
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${jwt.tokenHead}")
     private String tokenHead;
@@ -60,9 +61,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-                //判断是否为链接，如果是，需要访问token,并且设置用户对象
+                //判断是否为链接，如果是，需要获取token,并且设置用户对象
                 if (StompCommand.CONNECT.equals(accessor.getCommand())){
-                    String token = accessor.getFirstNativeHeader("Auth-Token");
+                    String token = accessor.getFirstNativeHeader("Auth-Token");//这个参数是前端发过来的
                     if (!StringUtils.isEmpty(token)){
                         String authToken = token.substring(tokenHead.length());
                         String username = jwtTokenUtil.getUsernameFromToken(authToken);

@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
  * 消息聊天类
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class ChatMsg {
     private String from;
     private String to;
     private String content;
     private LocalDateTime date;
-    private String formNickName;
+    private String fromNickName;
 }
