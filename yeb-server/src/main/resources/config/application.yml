@@ -27,6 +27,7 @@ spring:
     #消息失败回调
     publisher-returns: true
 
+
   redis:
     #超时时间
     timeout: 10000ms

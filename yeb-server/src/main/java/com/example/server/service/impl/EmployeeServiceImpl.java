@@ -90,13 +90,14 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
             //数据库记录发送的消息
             String msgId = UUID.randomUUID().toString();
+//            String msgId = "123456";
             MailLog mailLog = new MailLog();
             mailLog.setMsgId(msgId);
             mailLog.setEid(employee.getId());
             mailLog.setStatus(0);
             mailLog.setRouteKey(MailConstants.MAIL_ROUTING_KEY_NAME);
             mailLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
-            mailLog.setCount(MailConstants.MAX_TRY_COUNT);
+            mailLog.setCount(0);
             mailLog.setTryTime(LocalDateTime.now().plusMinutes(MailConstants.MSG_TIMEOUT));
             mailLog.setCreateTime(LocalDateTime.now());
             mailLog.setUpdateTime(LocalDateTime.now());
@@ -120,5 +121,20 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public List<Employee> getEmployee(Integer id) {
         return employeeMapper.getEmployee(id);
+    }
+
+    /**
+     * 获取所有员工的工资账套
+     * @param currentPage
+     * @param size
+     * @return
+     */
+    @Override
+    public RespPageBean getEmployeeWithSalary(Integer currentPage, Integer size) {
+        //开启分页
+        Page<Employee> page = new Page<>(currentPage,size);
+        IPage<Employee> employeeIPage = employeeMapper.getEmployeeWithSalary(page);
+        RespPageBean respPageBean = new RespPageBean(employeeIPage.getTotal(),employeeIPage.getRecords());
+        return respPageBean;
     }
 }

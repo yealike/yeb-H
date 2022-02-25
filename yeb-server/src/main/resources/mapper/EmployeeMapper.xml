@@ -119,32 +119,78 @@
     <!--查询员工-->
     <select id="getEmployee" resultMap="EmployeeInfo">
         select e.*,
-               n.id     as nid,
-               n.name   as nname,
-               p.id     as pid,
-               p.name   as pname,
-               d.id     as did,
-               d.name   as dname,
-               j.id     as jid,
-               j.name   as jname,
-               pos.id   as posid,
-               pos.name as posname
+        n.id as nid,
+        n.name as nname,
+        p.id as pid,
+        p.name as pname,
+        d.id as did,
+        d.name as dname,
+        j.id as jid,
+        j.name as jname,
+        pos.id as posid,
+        pos.name as posname
         from t_employee e,
-             t_nation n,
-             t_politics_status p,
-             t_department d,
-             t_joblevel j,
-             t_position pos
+        t_nation n,
+        t_politics_status p,
+        t_department d,
+        t_joblevel j,
+        t_position pos
         where e.nationId = n.id
-          and e.politicId = p.id
-          and e.departmentId = d.id
-          and e.jobLevelId = j.id
-          and e.posId = pos.id
+        and e.politicId = p.id
+        and e.departmentId = d.id
+        and e.jobLevelId = j.id
+        and e.posId = pos.id
 
         <if test="null !=id">
             and e.id = #{id}
         </if>
 
+        order by e.id
+    </select>
+
+
+    <resultMap id="EmployeeWithSalary" type="com.example.server.pojo.Employee" extends="BaseResultMap">
+        <association property="salary" javaType="com.example.server.pojo.Salary">
+            <id column="sid" property="id"/>
+            <result column="sname" property="name"/>
+            <result column="sbasicSalary" property="basicSalary"/>
+            <result column="sbonus" property="bonus"/>
+            <result column="slunchSalary" property="lunchSalary"/>
+            <result column="strafficSalary" property="trafficSalary"/>
+            <result column="sallSalary" property="allSalary"/>
+            <result column="spensionBase" property="pensionBase"/>
+            <result column="sPensionPer" property="pensionPer"/>
+            <result column="smedicalBase" property="medicalBase"/>
+            <result column="smedicalPer" property="medicalPer"/>
+            <result column="saccumulationFunBase" property="accumulationFunBase"/>
+            <result column="saccumulationFunPer" property="accumulationFunPer"/>
+        </association>
+        <association property="department" javaType="com.example.server.pojo.Department">
+            <result column="dname" property="name"/>
+        </association>
+    </resultMap>
+    <!--获取所有员工的工资账套-->
+    <select id="getEmployeeWithSalary" resultMap="EmployeeWithSalary">
+        select e.*,
+               d.name                 as dname,
+               s.id                   as sid,
+               s.name                 as sname,
+               s.basicSalary          as sbasicSalary,
+               s.bonus                as sbonus,
+               s.lunchSalary          as slunchSalary,
+               s.trafficSalary        as strafficSalary,
+               s.allSalary            as sallSalary,
+               s.pensionBase          as spensionBase,
+               s.pensionPer           as spensionPer,
+               s.medicalBase          as smedicalBase,
+               s.medicalPer           as smedicalPer,
+               s.accumulationFundBase as saccumulationFundBase,
+               s.accumulationFundPer  as saccumulationFundPer
+
+
+        from t_employee e
+                 left join t_salary s on e.salaryId = s.id
+                 left join t_department d on e.departmentId = d.id
         order by e.id
     </select>
 </mapper>
