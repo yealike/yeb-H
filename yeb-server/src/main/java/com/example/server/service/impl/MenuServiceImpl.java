@@ -1,7 +1,6 @@
 package com.example.server.service.impl;
 
-import com.example.server.AdminUtils;
-import com.example.server.pojo.Admin;
+import com.example.server.utils.AdminUtils;
 import com.example.server.pojo.Menu;
 import com.example.server.mapper.MenuMapper;
 import com.example.server.service.IMenuService;
@@ -9,7 +8,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

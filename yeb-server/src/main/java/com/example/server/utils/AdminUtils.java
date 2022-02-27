@@ -1,4 +1,4 @@
-package com.example.server;
+package com.example.server.utils;
 
 import com.example.server.pojo.Admin;
 import org.springframework.security.core.context.SecurityContextHolder;

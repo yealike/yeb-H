@@ -85,6 +85,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.rui8832</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.29-20211022</version>
+        </dependency>
     </dependencies>
 
 </project>
