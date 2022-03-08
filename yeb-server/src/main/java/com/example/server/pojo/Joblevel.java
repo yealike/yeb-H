@@ -39,7 +39,7 @@ public class Joblevel implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "职称名称")
-    @Excel(name = "职称名称")
+    @Excel(name = "职称")
     @NonNull
     private String name;
 

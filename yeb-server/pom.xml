@@ -90,6 +90,12 @@
             <artifactId>fastdfs-client-java</artifactId>
             <version>1.29-20211022</version>
         </dependency>
+        <!--FastDfs-->
+        <dependency>
+            <groupId>net.arccode</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27.0</version>
+        </dependency>
     </dependencies>
 
 </project>

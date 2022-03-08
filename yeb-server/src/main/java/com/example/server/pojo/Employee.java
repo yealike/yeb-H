@@ -142,6 +142,7 @@ public class Employee implements Serializable {
     private LocalDate endContract;
 
     @ApiModelProperty(value = "工龄")
+    @Excel(name = "工龄")
     private Integer workAge;
 
     @ApiModelProperty(value = "工资账套ID")

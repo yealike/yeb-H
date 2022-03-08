@@ -62,6 +62,7 @@
         </association>
 
     </resultMap>
+
     <!--获取所有员工-->
     <select id="getEmployeeByPage" resultMap="EmployeeInfo">
         select e.*,
